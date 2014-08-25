@@ -160,7 +160,7 @@ BOOL isIPhone4()
 
 - (void)showActionSheetPicker
 {
-    UIView *masterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.viewSize.width, 260)];
+    UIView *masterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.viewSize.width, 280)];
 
     // to fix bug, appeared only on iPhone 4 Device: https://github.com/skywinder/ActionSheetPicker-3.0/issues/5
     if ( isIPhone4() )
@@ -338,7 +338,7 @@ BOOL isIPhone4()
 {
     UILabel *toolBarItemlabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 180, 30)];
     [toolBarItemlabel setTextAlignment:NSTextAlignmentCenter];
-    [toolBarItemlabel setTextColor:(NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1) ? [UIColor blackColor] : [UIColor whiteColor]];
+    [toolBarItemlabel setTextColor:(NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1) ? [UIColor whiteColor] : [UIColor whiteColor]];
     [toolBarItemlabel setFont:[UIFont boldSystemFontOfSize:16]];
     [toolBarItemlabel setBackgroundColor:[UIColor clearColor]];
     toolBarItemlabel.text = aTitle;
@@ -478,7 +478,7 @@ BOOL isIPhone4()
     } else if (self.containerView) {
         CGRect frame = _containerView.frame;
         
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) frame.origin.y -= 138;
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) frame.origin.y -= 14;
         [popover presentPopoverFromRect:frame inView:_containerView
                permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
         return;

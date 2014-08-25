@@ -65,6 +65,10 @@
 
 #pragma mark - IBActions
 
+- (IBAction)selectNavbarButton:(id)sender {
+    [self selectABlock:sender];
+}
+
 - (IBAction)selectABlock:(UIControl *)sender {
     ActionStringDoneBlock done = ^(ActionSheetStringPicker *picker, NSInteger selectedIndex, id selectedValue) {
         if ([sender respondsToSelector:@selector(setText:)]) {

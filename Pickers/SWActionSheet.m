@@ -72,6 +72,11 @@ static const enum UIViewAnimationOptions options = UIViewAnimationOptionCurveEas
     [_origin addSubview:self];
     CGPoint toPoint;
     CGFloat y = self.center.y - CGRectGetHeight(view.frame);
+
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) {
+        y = [[UIScreen mainScreen] bounds].size.height - 410;
+    }
+    
     toPoint = CGPointMake(self.center.x, y);
 
     [UIView animateWithDuration:duration delay:delay
