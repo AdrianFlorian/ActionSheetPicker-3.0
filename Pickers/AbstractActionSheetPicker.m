@@ -167,8 +167,11 @@ BOOL isIPhone4()
     {
         masterView.backgroundColor = [UIColor colorWithRed:0.97 green:0.97 blue:0.97 alpha:1.0];
     }
-    self.toolbar = [self createPickerToolbarWithTitle:self.title];
-    [masterView addSubview:self.toolbar];
+    
+    if (UI_USER_INTERFACE_IDIOM() != UIUserInterfaceIdiomPad) {
+        self.toolbar = [self createPickerToolbarWithTitle:self.title];
+        [masterView addSubview:self.toolbar];
+    }
 
     //ios7 picker draws a darkened alpha-only region on the first and last 8 pixels horizontally, but blurs the rest of its background.  To make the whole popup appear to be edge-to-edge, we have to add blurring to the remaining left and right edges.
     if ( NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1 )
@@ -184,6 +187,8 @@ BOOL isIPhone4()
         [masterView insertSubview:leftEdge atIndex:0];
         [masterView insertSubview:rightEdge atIndex:0];
     }
+    
+    
 
     self.pickerView = [self configuredPickerView];
     NSAssert(_pickerView != NULL, @"Picker view failed to instantiate, perhaps you have invalid component data.");
@@ -383,16 +388,13 @@ BOOL isIPhone4()
 
 - (CGSize)viewSize
 {
-    if ( IS_IPAD )
-    {
-        if ( [self isViewPortrait] )
-            return CGSizeMake(320 , 480);
-        return CGSizeMake(480, 320);
+    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
+        return CGSizeMake(320, 240);
+    } else {
+        if (![self isViewPortrait])
+            return CGSizeMake(480, 320);
+        return CGSizeMake(320, 480);
     }
-
-    if ( [self isViewPortrait] )
-        return CGSizeMake(320 , IS_WIDESCREEN ? 568 : 480);
-    return CGSizeMake(IS_WIDESCREEN ? 568 : 480, 320);
 }
 
 - (BOOL)isViewPortrait
@@ -462,24 +464,26 @@ BOOL isIPhone4()
     viewController.view = aView;
     viewController.contentSizeForViewInPopover = viewController.view.frame.size;
     _popOverController = [[UIPopoverController alloc] initWithContentViewController:viewController];
+    _popOverController.delegate = self;
     [self presentPopover:_popOverController];
 }
 
 - (void)presentPopover:(UIPopoverController *)popover
 {
     NSParameterAssert(popover != NULL);
-    if ( self.barButtonItem )
-    {
+    if (self.barButtonItem) {
         [popover presentPopoverFromBarButtonItem:_barButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny
                                         animated:YES];
         return;
-    }
-    else if ( (self.containerView) )
-    {
-        [popover presentPopoverFromRect:_containerView.bounds inView:_containerView
-               permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+    } else if (self.containerView) {
+        CGRect frame = _containerView.frame;
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) frame.origin.y -= 138;
+        [popover presentPopoverFromRect:frame inView:_containerView
+               permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
         return;
     }
+    
     // Unfortunately, things go to hell whenever you try to present a popover from a table view cell.  These are failsafes.
     UIView *origin = nil;
     CGRect presentRect = CGRectZero;
@@ -494,9 +498,15 @@ BOOL isIPhone4()
     {
         origin = [[[[UIApplication sharedApplication] keyWindow] rootViewController] view];
         presentRect = CGRectMake(origin.center.x, origin.center.y, 1, 1);
-        [popover presentPopoverFromRect:presentRect inView:origin permittedArrowDirections:UIPopoverArrowDirectionAny
+        [popover presentPopoverFromRect:presentRect inView:origin permittedArrowDirections:UIPopoverArrowDirectionLeft
                                animated:YES];
     }
+}
+
+#pragma mark - UIPopoverControllerDelegate
+
+-(void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController {
+    [self actionPickerDone:nil];
 }
 
 
