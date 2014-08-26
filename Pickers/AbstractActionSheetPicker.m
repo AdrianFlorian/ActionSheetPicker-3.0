@@ -495,7 +495,10 @@ BOOL isIPhone4()
     }
     else if (self.containerView)
     {
-        [popover presentPopoverFromRect:_containerView.frame inView:_containerView
+        CGRect frame = _containerView.frame;
+        
+        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) frame.origin.y -= 14;
+        [popover presentPopoverFromRect:frame inView:_containerView
                permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
         return;
     }
