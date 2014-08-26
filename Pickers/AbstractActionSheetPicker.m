@@ -160,7 +160,7 @@ BOOL isIPhone4()
 
 - (void)showActionSheetPicker
 {
-    UIView *masterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.viewSize.width, 280)];
+    UIView *masterView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, self.viewSize.width, 260)];
 
     // to fix bug, appeared only on iPhone 4 Device: https://github.com/skywinder/ActionSheetPicker-3.0/issues/5
     if ( isIPhone4() )
@@ -462,6 +462,7 @@ BOOL isIPhone4()
 {
     UIViewController *viewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
     viewController.view = aView;
+    viewController.preferredContentSize = CGSizeMake(320, 260);
     viewController.contentSizeForViewInPopover = viewController.view.frame.size;
     _popOverController = [[UIPopoverController alloc] initWithContentViewController:viewController];
     _popOverController.delegate = self;
@@ -477,9 +478,8 @@ BOOL isIPhone4()
         return;
     } else if (self.containerView) {
         CGRect frame = _containerView.frame;
-        
-        if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) frame.origin.y -= 14;
-        [popover presentPopoverFromRect:frame inView:_containerView
+
+        [popover presentPopoverFromRect:_containerView.frame inView:_containerView
                permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
         return;
     }
