@@ -187,8 +187,6 @@ BOOL isIPhone4()
         [masterView insertSubview:leftEdge atIndex:0];
         [masterView insertSubview:rightEdge atIndex:0];
     }
-    
-    
 
     self.pickerView = [self configuredPickerView];
     if (IS_IPAD) {
@@ -464,6 +462,7 @@ BOOL isIPhone4()
     NSParameterAssert(actionSheet != NULL);
     if ( self.barButtonItem )
         [actionSheet showFromBarButtonItem:_barButtonItem animated:YES];
+    else
         [actionSheet showInContainerView];
 }
 
@@ -471,7 +470,14 @@ BOOL isIPhone4()
 {
     UIViewController *viewController = [[UIViewController alloc] initWithNibName:nil bundle:nil];
     viewController.view = aView;
-    viewController.preferredContentSize = CGSizeMake(320, 260);
+
+    if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1) {
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "UnavailableInDeploymentTarget"
+        viewController.preferredContentSize = aView.frame.size;
+#pragma clang diagnostic pop
+    }
+
     viewController.contentSizeForViewInPopover = viewController.view.frame.size;
     _popOverController = [[UIPopoverController alloc] initWithContentViewController:viewController];
     _popOverController.delegate = self;
