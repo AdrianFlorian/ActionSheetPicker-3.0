@@ -191,6 +191,12 @@ BOOL isIPhone4()
     
 
     self.pickerView = [self configuredPickerView];
+    if (IS_IPAD) {
+        CGRect frame = self.pickerView.frame;
+        frame.origin.y = 24;
+        self.pickerView.frame = frame;
+    }
+    
     NSAssert(_pickerView != NULL, @"Picker view failed to instantiate, perhaps you have invalid component data.");
     [masterView addSubview:_pickerView];
     [self presentPickerForView:masterView];
@@ -388,13 +394,16 @@ BOOL isIPhone4()
 
 - (CGSize)viewSize
 {
-    if (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad) {
-        return CGSizeMake(320, 240);
-    } else {
-        if (![self isViewPortrait])
-            return CGSizeMake(480, 320);
-        return CGSizeMake(320, 480);
+    if ( IS_IPAD )
+    {
+        if ( [self isViewPortrait] )
+            return CGSizeMake(320 , 480);
+        return CGSizeMake(480, 320);
     }
+    
+    if ( [self isViewPortrait] )
+        return CGSizeMake(320 , IS_WIDESCREEN ? 568 : 480);
+    return CGSizeMake(IS_WIDESCREEN ? 568 : 480, 320);
 }
 
 - (BOOL)isViewPortrait
@@ -472,13 +481,14 @@ BOOL isIPhone4()
 - (void)presentPopover:(UIPopoverController *)popover
 {
     NSParameterAssert(popover != NULL);
-    if (self.barButtonItem) {
+    if (self.barButtonItem)
+    {
         [popover presentPopoverFromBarButtonItem:_barButtonItem permittedArrowDirections:UIPopoverArrowDirectionAny
                                         animated:YES];
         return;
-    } else if (self.containerView) {
-        CGRect frame = _containerView.frame;
-
+    }
+    else if (self.containerView)
+    {
         [popover presentPopoverFromRect:_containerView.frame inView:_containerView
                permittedArrowDirections:UIPopoverArrowDirectionLeft animated:YES];
         return;
