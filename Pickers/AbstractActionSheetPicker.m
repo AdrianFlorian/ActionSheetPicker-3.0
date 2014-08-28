@@ -382,7 +382,7 @@ BOOL isIPhone4()
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "UnavailableInDeploymentTarget"
     if ( NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1 )
-        [barButton setTintColor:[[UIApplication sharedApplication] keyWindow].tintColor];
+        [barButton setTintColor:[UIToolbar appearance].tintColor];
 #pragma clang diagnostic pop
 
     return barButton;
