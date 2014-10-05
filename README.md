@@ -1,4 +1,5 @@
 [![Version](http://img.shields.io/cocoapods/v/ActionSheetPicker-3.0.svg)](http://cocoadocs.org/docsets/ActionSheetPicker-3.0)
+[![Build Status](https://travis-ci.org/skywinder/ActionSheetPicker-3.0.svg?branch=master)](https://travis-ci.org/skywinder/ActionSheetPicker-3.0)
 [![License](https://img.shields.io/cocoapods/l/ActionSheetPicker-3.0.svg)](http://cocoadocs.org/docsets/ActionSheetPicker-3.0)
 [![Platform](https://img.shields.io/cocoapods/p/ActionSheetPicker-3.0.svg)](http://cocoadocs.org/docsets/ActionSheetPicker-3.0)
 [![Issues](http://img.shields.io/github/issues/skywinder/ActionSheetPicker-3.0.svg)](https://github.com/skywinder/ActionSheetPicker-3.0/issues?state=open)
@@ -7,7 +8,7 @@ Since the [Tim's repo](https://github.com/TimCinel/ActionSheetPicker) is outdate
 
 I resolved almost all (60+ pull requests and issues) in Tim's repo, but new updates will be added here.
 
-`pod 'ActionSheetPicker-3.0', '~> 1.1.3'` (**iOS 8** compatible already!)
+`pod 'ActionSheetPicker-3.0', '~> 1.1.18'` (**iOS 8** compatible already!)
 
 Please welcome: **ActionSheetPicker-3.0**!
 
@@ -99,14 +100,14 @@ This method is called right before `actionSheetPicker` is presented and it can b
 
 Example with custom text in Done button:
 ```obj-c
-    ActionSheetStringPicker *picker = [ActionSheetStringPicker showPickerWithTitle:@"Select a Block" rows:colors initialSelection:0 doneBlock:done cancelBlock:cancel origin:sender];
+    ActionSheetStringPicker *picker = [[ActionSheetStringPicker alloc] initWithTitle:@"Select a Block" rows:colors initialSelection:0 doneBlock:done cancelBlock:cancel origin:sender];
     [picker setDoneButton:[[UIBarButtonItem alloc] initWithTitle:@"My Text"  style:UIBarButtonItemStylePlain target:nil action:nil]];
     [picker showActionSheetPicker];
 ```
 
 Example with custom button for cancel button:
 ```obj-c
-    ActionSheetStringPicker *picker = [ActionSheetStringPicker showPickerWithTitle:@"Select a Block" rows:colors initialSelection:0 doneBlock:done cancelBlock:cancel origin:sender];
+    ActionSheetStringPicker *picker = [[ActionSheetStringPicker alloc] initWithTitle:@"Select a Block" rows:colors initialSelection:0 doneBlock:done cancelBlock:cancel origin:sender];
     UIButton *cancelButton =  [UIButton buttonWithType:UIButtonTypeCustom];
     [cancelButton setImage:[UIImage imageNamed:@"cancel.png"] forState:UIControlStateNormal];
     [cancelButton setFrame:CGRectMake(0, 0, 32, 32)];
@@ -122,33 +123,15 @@ Example with custom button for cancel button:
 ![CustomButtons](https://raw.githubusercontent.com/skywinder/ActionSheetPicker-3.0/master/Screenshots/custom.png "CustomButtons")
 ![iPad Support](https://raw.githubusercontent.com/skywinder/ActionSheetPicker-3.0/master/Screenshots/ipad.png "iPad Support")
 
+
+## Creator ##
+
+ActionSheetPicker was originally created by [Tim Cinel](http://github.com/TimCinel) ([@TimCinel](http://twitter.com/TimCinel))
+
+## Maintainer and Contributor ##
+
+- [Petr Korolev](http://github.com/skywinder) (bugfixing, update to iOS 7 and iOS 8, implementing new pickers, community support)
+
 ## Credits ##
 
-Thanks to all of the contributors for making ActionSheetPicker better for the iOS developer community. See AUTHORS for details.
-
-
-### Contributors ###
-
-[Filote Stefan](http://github.com/sfilo)
-
-[Brett Gibson](http://github.com/brettg)
-
-[John Garland](http://github.com/johnnyg) (iPad!)
-
-[Mark van den Broek](http://github.com/heyhoo)
-
-[Evan Cordell](http://github.com/ecordell)
-
-[Greg Combs](http://github.com/grgcombs) (Refactor!)
-
-[Petr Korolev](http://github.com/skywinder) (Update, crash-fix update for iOS7, new pickers)
-
-[Nikos Mouzakitis](http://github.com/NikDude)
-
-### Creator ###
-
-[Tim Cinel](http://github.com/TimCinel)
-
-[@TimCinel](http://twitter.com/TimCinel)
-
-[timcinel.com/](http://www.timcinel.com/)
+And most of all, thanks to ActionSheetPicker-3.0's [growing list of contributors](https://github.com/skywinder/ActionSheetPicker-3.0/graphs/contributors).

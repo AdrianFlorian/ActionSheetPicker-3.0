@@ -26,7 +26,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
+
+static NSString *const kButtonValue = @"buttonValue";
+
+static NSString *const kButtonTitle = @"buttonTitle";
 
 @interface AbstractActionSheetPicker : NSObject<UIPopoverControllerDelegate>
 @property (nonatomic, strong) UIToolbar* toolbar;
@@ -63,5 +68,8 @@
 
     // Allow the user to specify a custom done button
 - (void) setDoneButton: (UIBarButtonItem *)button;
+
+    // Hide picker programmatically
+- (void) hidePickerWithCancelAction;
 
 @end
