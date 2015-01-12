@@ -27,7 +27,6 @@
 
 
 #import <UIKit/UIKit.h>
-#import "ActionSheetPicker.h"
 
 @class AbstractActionSheetPicker;
 @interface ActionSheetPickerViewController : UIViewController <UITextFieldDelegate>
@@ -35,6 +34,7 @@
 @property (nonatomic, strong) IBOutlet UITextField *animalTextField;
 @property (nonatomic, strong) IBOutlet UITextField *dateTextField;
 @property (nonatomic, strong) IBOutlet UITextField *timeTextField;
+@property (strong, nonatomic) IBOutlet UITextField *counDownTextField;
 
 @property (nonatomic, strong) NSArray *animals;
 @property (nonatomic, assign) NSInteger selectedIndex;
