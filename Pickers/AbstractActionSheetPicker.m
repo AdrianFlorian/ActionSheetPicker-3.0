@@ -132,15 +132,19 @@ CG_INLINE BOOL isIPhone4() {
     if (self) {
         self.presentFromRect = CGRectZero;
         self.popoverBackgroundViewClass = nil;
-        self.supportedInterfaceOrientations = (UIInterfaceOrientationMask) [[UIApplication sharedApplication]
-                                                                                     supportedInterfaceOrientationsForWindow:
-                                                                                             [UIApplication sharedApplication].keyWindow];
-        if ( [origin isKindOfClass:[UIBarButtonItem class]] )
-            self.barButtonItem = origin;
-        else if ( [origin isKindOfClass:[UIView class]] )
-            self.containerView = origin;
-        else
-            NSAssert(NO, @"Invalid origin provided to ActionSheetPicker ( %@ )", origin);
+        
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "UnavailableInDeploymentTarget"
+        if ([UIApplication instancesRespondToSelector:@selector(supportedInterfaceOrientationsForWindow:)])
+            self.supportedInterfaceOrientations = (UIInterfaceOrientationMask) [[UIApplication sharedApplication]
+                                                                                supportedInterfaceOrientationsForWindow:
+                                                                                [UIApplication sharedApplication].keyWindow];
+        else {
+            self.supportedInterfaceOrientations = UIInterfaceOrientationMaskAllButUpsideDown;
+            if (IS_IPAD)
+                self.supportedInterfaceOrientations |= (1 << UIInterfaceOrientationPortraitUpsideDown);
+        }
+#pragma clang diagnostic pop
         
         UIBarButtonItem *sysDoneButton = [self createButtonWithType:UIBarButtonSystemItemDone target:self
                                                              action:@selector(actionPickerDone:)];
@@ -150,15 +154,14 @@ CG_INLINE BOOL isIPhone4() {
         
         [self setCancelBarButtonItem:sysCancelButton];
         [self setDoneBarButtonItem:sysDoneButton];
-
+        
         self.tapDismissAction = TapActionNone;
         //allows us to use this without needing to store a reference in calling class
         self.selfReference = self;
     }
-
+    
     return self;
 }
-
 
 - (instancetype)initWithTarget:(id)target successAction:(SEL)successAction cancelAction:(SEL)cancelActionOrNil origin:(id)origin {
     self = [self init];
