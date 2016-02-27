@@ -475,6 +475,7 @@ CG_INLINE BOOL isIPhone4() {
         if (NSFoundationVersionNumber > NSFoundationVersionNumber_iOS_6_1) {
             button = [[UIBarButtonItem alloc] initWithTitle:buttonTitle style:UIBarButtonItemStylePlain
                                                      target:self action:@selector(customButtonPressed:)];
+            [button setTintColor:[UIColor whiteColor]];
         }
         else {
 #pragma clang diagnostic push
@@ -546,7 +547,8 @@ CG_INLINE BOOL isIPhone4() {
     if (strikeWidth < 180) {
         [toolBarItemLabel sizeToFit];
     }
-
+    
+    toolBarItemLabel.textColor = [UIColor whiteColor];
     UIBarButtonItem *buttonLabel = [[UIBarButtonItem alloc] initWithCustomView:toolBarItemLabel];
     return buttonLabel;
 }
